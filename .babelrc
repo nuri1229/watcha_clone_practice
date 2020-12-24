@@ -11,5 +11,6 @@
         "shippedProposals": true
       }
     ]
-  ]
+  ],
+  "plugins": ["@babel/plugin-transform-react-jsx-source"]
 }

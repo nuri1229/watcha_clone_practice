@@ -12,7 +12,10 @@
     "baseUrl": "./",
     "strict": true,
     "strictNullChecks": true,
-    "paths": {}
+    "paths": {
+      "global/*": ["./src/global/*"]
+    },
+    "jsx": "react"
   },
   "awesomeTypescriptLoaderOptions": {
     "useCache": true

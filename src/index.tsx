@@ -1,5 +1,8 @@
-console.log("init!!!");
+import "core-js/stable";
+import "regenerator-runtime/runtime";
 
-alert(1);
+import React from "react";
+import ReactDOM from "react-dom";
+import App from "./App";
 
-const test = () => {};
+ReactDOM.render(<App />, document.getElementById("root"));

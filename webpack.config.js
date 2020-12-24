@@ -12,7 +12,7 @@ module.exports = (env, argv) => {
     resolve: {
       extensions: [".ts", ".tsx", ".js"],
       alias: {
-        // todo(선택) : import시 경로를 줄여 사용할 키워드를 입력합니다. 예) global: path.resolve(__dirname, 'src/global/')
+        global: path.resolve(__dirname, "src/global/"),
       },
     },
     output: {
