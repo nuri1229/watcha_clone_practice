@@ -1,8 +1,13 @@
 import React from "react";
 import styled from "styled-components";
+import { TopNavBar } from "global/component/organisms";
 
-export const Nav: React.FC = ({ children }) => {
-  return <StyledNav>{children}</StyledNav>;
+export const Nav: React.FC = () => {
+  return (
+    <StyledNav>
+      <TopNavBar />
+    </StyledNav>
+  );
 };
 
 export const StyledNav = styled.nav`
@@ -14,6 +19,6 @@ export const StyledNav = styled.nav`
   width: 100%;
   height: 72px;
   padding: 0px 4%;
-  border: 1px solid red;
+
   box-sizing: border-box;
 `;
