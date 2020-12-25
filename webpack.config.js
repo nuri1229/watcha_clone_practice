@@ -13,6 +13,8 @@ module.exports = (env, argv) => {
       extensions: [".ts", ".tsx", ".js"],
       alias: {
         global: path.resolve(__dirname, "src/global/"),
+        main: path.resolve(__dirname, "src/main/"),
+        asset: path.resolve(__dirname, "src/asset"),
       },
     },
     output: {

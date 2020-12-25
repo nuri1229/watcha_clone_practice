@@ -13,7 +13,9 @@
     "strict": true,
     "strictNullChecks": true,
     "paths": {
-      "global/*": ["./src/global/*"]
+      "global/*": ["./src/global/*"],
+      "main/*": ["./src/main/*"],
+      "asset/*": ["./src/asset"]
     },
     "jsx": "react"
   },

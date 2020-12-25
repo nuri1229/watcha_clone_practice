@@ -1,8 +1,13 @@
 import React from "react";
 import styled from "styled-components";
+import { MainPage } from "main/page";
 
 export const Main: React.FC = () => {
-  return <StyledMain></StyledMain>;
+  return (
+    <StyledMain>
+      <MainPage />
+    </StyledMain>
+  );
 };
 
 const StyledMain = styled.main`
