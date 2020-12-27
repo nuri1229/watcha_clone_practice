@@ -3,6 +3,7 @@ import styled from "styled-components";
 import img_jumbotron from "asset/images/jumbotron_image.jpg";
 import img_me_before_you from "asset/images/me_before_you.png";
 import { FlexBox } from "global/style";
+import { Slider } from "global/hoc";
 
 export const JumboTron: React.FC = () => {
   return (
@@ -30,14 +31,11 @@ const StyledJumboTron = styled.div`
   width: 100%;
   box-sizing: border-box;
   background-image: url(${img_jumbotron});
-  background-size: contain;
+  background-size: cover;
   background-position: center center;
   background-repeat: no-repeat;
   height: 543.33px;
-  position: absolute;
   opacity: 0.9;
-  top: 0;
-  left: 0;
 
   .text_wrapper {
     /* position: absolute; */
