@@ -4,6 +4,16 @@ import styled from "styled-components";
 const array = ["sliders1", "sliders2"];
 
 export const Slider: React.FC = ({ children }) => {
+  const test = () => {
+    const active = document.querySelector(".active");
+    active?.classList.remove("active");
+    (active?.nextSibling as Element).classList.add("active");
+  };
+
+  const addClass = (active: Element | null) => {
+    (active?.nextSibling as Element).classList.add("active");
+  };
+
   const initValue: {
     viewIndex: number;
     sliders: string[];
@@ -21,6 +31,7 @@ export const Slider: React.FC = ({ children }) => {
       </div>
       <div
         onClick={() => {
+          const active = document.querySelector(".active");
           const sliders = document.querySelectorAll(".sliders");
           const first = sliders[0];
           const last = sliders[sliders.length - 1];
@@ -28,11 +39,17 @@ export const Slider: React.FC = ({ children }) => {
           wrapper?.removeChild(last);
           wrapper?.insertBefore(last, first);
 
-          const active = document.querySelector(".active");
-          console.log("active", active);
           active?.classList.remove("active");
-          if (active?.previousSibling) (active?.previousSibling as Element).classList.add("active");
-          else document.querySelectorAll(".sliders")[0].classList.add("active");
+
+          if (array.length <= 2) {
+            setTimeout(() => {
+              document.querySelectorAll(".sliders")[1].classList.add("active");
+            }, 0);
+          } else {
+            document.querySelectorAll(".sliders")[1].classList.add("active");
+          }
+          // if (active?.previousSibling) (active?.previousSibling as Element).classList.add("active");
+          // else document.querySelectorAll(".sliders")[0].classList.add("active");
         }}>
         이전
       </div>
@@ -41,15 +58,20 @@ export const Slider: React.FC = ({ children }) => {
           const sliders = document.querySelectorAll(".sliders");
           const first = sliders[0];
           const wrapper = document.querySelector(".wrapper");
-          wrapper?.removeChild(first);
-          wrapper?.appendChild(first);
-
           const active = document.querySelector(".active");
-          console.log("active", active);
+
+          wrapper?.removeChild(first);
+          wrapper?.appendChild(first.cloneNode(true));
+
           active?.classList.remove("active");
 
-          if (active?.nextSibling) (active?.nextSibling as Element).classList.add("active");
-          else (document.querySelectorAll(".sliders")[document.querySelectorAll(".sliders").length - 1] as Element).classList.add("active");
+          if (array.length <= 2) {
+            setTimeout(() => {
+              (active?.nextSibling as Element).classList.add("active");
+            }, 0);
+          } else {
+            (active?.nextSibling as Element).classList.add("active");
+          }
         }}>
         다음
       </div>
