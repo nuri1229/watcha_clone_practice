@@ -1,22 +1,18 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 
-const array = ["sliders1", "sliders2", "sliders3"];
+const array = ["sliders1", "sliders2"];
 
 export const Slider: React.FC = ({ children }) => {
   const initValue: {
     viewIndex: number;
-    middleArray: string[];
-    leftArray: string[];
-    rightArray: string[];
+    sliders: string[];
   } = {
-    viewIndex: 0,
-    middleArray: [...array],
-    leftArray: [],
-    rightArray: [],
+    viewIndex: 1,
+    sliders: [...array.slice(array.length - 1), ...array.slice(0, array.length - 1)],
   };
   const [sliderState, setSliderSate] = useState<typeof initValue>(initValue);
-  const { viewIndex, leftArray, middleArray, rightArray } = sliderState;
+  const { viewIndex, sliders } = sliderState;
 
   return (
     <>
@@ -25,50 +21,47 @@ export const Slider: React.FC = ({ children }) => {
       </div>
       <div
         onClick={() => {
-          if (viewIndex === 0) {
-            setSliderSate({
-              ...sliderState,
-              viewIndex: middleArray.length - 1,
-              middleArray: [...array, ...middleArray],
-            });
-            return;
-          }
+          const sliders = document.querySelectorAll(".sliders");
+          const first = sliders[0];
+          const last = sliders[sliders.length - 1];
+          const wrapper = document.querySelector(".wrapper");
+          wrapper?.removeChild(last);
+          wrapper?.insertBefore(last, first);
 
-          // if (viewIndex === array.length) {
-          //   setSliderSate({
-          //     viewIndex: array.length - 1,
-          //     newArray: [...array, ...newArray],
-          //   });
-          //   return;
-          // }
-          setSliderSate({ ...sliderState, viewIndex: viewIndex - 1 });
+          const active = document.querySelector(".active");
+          console.log("active", active);
+          active?.classList.remove("active");
+          if (active?.previousSibling) (active?.previousSibling as Element).classList.add("active");
+          else document.querySelectorAll(".sliders")[0].classList.add("active");
         }}>
         이전
       </div>
       <div
         onClick={() => {
-          if (viewIndex === array.length - 1) {
-            setSliderSate({
-              ...sliderState,
-              leftArray: [],
-              viewIndex: viewIndex + 1,
-              middleArray: [...middleArray, ...array],
-            });
-            return;
-          }
-          setSliderSate({ ...sliderState, viewIndex: viewIndex + 1 });
+          const sliders = document.querySelectorAll(".sliders");
+          const first = sliders[0];
+          const wrapper = document.querySelector(".wrapper");
+          wrapper?.removeChild(first);
+          wrapper?.appendChild(first);
+
+          const active = document.querySelector(".active");
+          console.log("active", active);
+          active?.classList.remove("active");
+
+          if (active?.nextSibling) (active?.nextSibling as Element).classList.add("active");
+          else (document.querySelectorAll(".sliders")[document.querySelectorAll(".sliders").length - 1] as Element).classList.add("active");
         }}>
         다음
       </div>
       <StyledSlider viewIndex={viewIndex}>
         <div className="wrapper">
-          {/* <div className={`sliders sliders1 active`} />
-          <div className={`sliders sliders2`} />
-          <div className={`sliders sliders3`} /> */}
-          {middleArray.map((e, index) => {
-            return <div key={`${e}${index}`} className={`sliders ${e} `} />;
+          {sliders.map((e, index) => {
+            return <div key={`${e}${index}`} className={`sliders ${e} ${index === 1 ? "active" : ""}`} />;
           })}
         </div>
+        {/* <div className="wrapper">
+          <div className="slider" />
+        </div> */}
       </StyledSlider>
     </>
   );
@@ -85,115 +78,31 @@ export const StyledSlider = styled.div<StyledSliderProps>`
 
   position: relative;
   width: 100%;
+  overflow-x: hidden;
 
   .wrapper {
+    position: relative;
     width: 100%;
-    position: absolute;
-    /* left: ${(props) => -1 * (props.viewIndex * 100)}%; */
-    top: 0;
-    /* transition: left 1s; */
-
-    /* animation-duration: 1s;
-    animation-name: slidein;
-    animation-fill-mode: both;
-    animation-play-state: running;*/
+    min-height: 300px;
+    margin: auto;
   }
-
-  .dummy {
-    display: inline-block;
-    width: 100%;
-    transition: all 1s;
-    margin-right: ${(props) => -1 * (props.viewIndex * 100)}%;
-  }
-
-  .wrapper:after {
-    transform: rotateZ(180deg);
-  }
-
-  .margin_controller {
-    margin-left: -${(props) => props.viewIndex * 100}%;
-  }
-
-  .animation {
-    /* animation-duration: 1s;
-    animation-name: slidein; */
-  }
-
-  @keyframes slidein {
-    from {
-      left: ${(props) => -1 * ((props.viewIndex + 1) * 100)}%;
-    }
-
-    to {
-      left: ${(props) => -1 * (props.viewIndex * 100)}%;
-    }
-  }
-
-  @keyframes slidein {
-    from {
-      left: ${(props) => -1 * (props.viewIndex - 1 * 100)}%;
-    }
-
-    to {
-      left: ${(props) => -1 * (props.viewIndex * 100)}%;
-    }
-  }
-
-  /* @keyframes slidein {
-    from {
-      left: -100%;
-    }
-
-    to {
-      left: 0%;
-    }
-  } */
 
   .sliders {
     width: 100%;
-    height: 200px;
-    border: 1px solid #fff;
-    box-sizing: border-box;
-    /* animation-duration: 1s;
-    animation-name: slidein; */
-    display: inline-block;
-    left: ${(props) => -1 * (props.viewIndex * 100)}%;
-    position: relative;
-    transition: all 0.2s ease-out;
-    /* transition-delay: 1s; */
+    height: 300px;
+    position: absolute;
 
-    /* transform: translate(0, 0);
+    transition: 0.2s;
+
+    transform: translate(-100%, 0);
 
     &.active {
       transform: translate(0, 0);
 
-      & ~ .slide {
+      & ~ .sliders {
         transform: translate(100%, 0);
       }
-    } */
-  }
-
-  .run {
-    animation-name: slidein;
-    animation-duration: 0.3s;
-    animation-fill-mode: both;
-  }
-
-  .out {
-    animation-name: slideout;
-    animation-duration: 0.3s;
-    animation-fill-mode: both;
-  }
-
-  .stop {
-    animation-play-state: paused;
-  }
-
-  .shifting {
-    /* animation-name: slidein;
-    animation-duration: 0.2s; */
-    /* animation-fill-mode: both; */
-    /* animation-direction: reverse;*/
+    }
   }
 
   .sliders1 {
