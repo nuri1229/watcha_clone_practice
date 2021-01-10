@@ -9,10 +9,12 @@
     "lint": "eslint --fix './src/**/*.{ts,tsx}'"
   },
   "dependencies": {
+    "@types/react-slick": "^0.23.4",
     "@types/styled-components": "^5.1.7",
     "core-js": "^3.8.1",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
+    "react-slick": "^0.27.13",
     "styled-components": "^5.2.1"
   },
   "devDependencies": {
